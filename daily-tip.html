@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wskazówka Dnia - Smaki Sezonu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+      body {
+        font-family: 'Poppins', sans-serif;
+      }
+      .accordion-header {
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      .accordion-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-in-out;
+      }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    
+    <script>
+      // Admin-only guard script
+      if (sessionStorage.getItem('isAdmin') !== 'true') {
+        window.location.href = 'login.html';
+      }
+    </script>
+
+    <div class="container mx-auto max-w-4xl p-4">
+        <!-- Header -->
+        <div class="flex items-center justify-between p-6 bg-white rounded-b-3xl shadow-md mb-8" style="background: linear-gradient(to right, #e0f7fa, #e8eaf6);">
+            <div class="flex items-center space-x-4">
+                <a href="admin.html" class="p-3 bg-white/70 rounded-full text-gray-600 hover:bg-white transition shadow">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800">Wskazówka Dnia</h1>
+                    <p class="text-gray-600">Codzienna dawka wiedzy!</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-2 sm:space-x-4">
+              <img id="user-avatar" src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80" alt="User Avatar" class="w-12 h-12 rounded-full border-2 border-white shadow-lg">
+              <button id="logout-btn" class="p-3 bg-red-100 rounded-full text-red-600 hover:bg-red-200 transition shadow">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+              </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main>
+            <div id="tip-accordion" class="bg-white rounded-2xl shadow-sm overflow-hidden">
+                <div id="tip-header" class="accordion-header p-6 flex justify-between items-center">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-seedling text-2xl text-green-500"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800">Twoja wskazówka na dziś</h3>
+                            <p class="text-sm text-gray-500">Kliknij, aby rozwinąć</p>
+                        </div>
+                    </div>
+                    <i id="tip-arrow" class="fas fa-chevron-down text-gray-500 transition-transform"></i>
+                </div>
+                <div id="tip-content" class="accordion-content">
+                    <div class="p-6 border-t border-gray-200">
+                        <h4 class="font-semibold text-gray-700 mb-2">Optymalizacja zdjęć produktowych</h4>
+                        <p class="text-gray-600 leading-relaxed">
+                            Upewnij się, że Twoje zdjęcia produktów są zoptymalizowane pod kątem szybkości ładowania. Użyj narzędzi do kompresji obrazów, takich jak TinyPNG lub ImageOptim. Staraj się utrzymać rozmiar pliku poniżej 100KB, nie tracąc przy tym na jakości. To znacznie poprawi doświadczenie użytkownika i SEO Twojej strony.
+                        </p>
+                        <button id="next-tip-btn" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">Następna wskazówka</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-6 text-center">
+              <h3 class="text-xl font-semibold text-gray-700">Poprzednie wskazówki</h3>
+            </div>
+
+            <div class="mt-4 space-y-4">
+              <!-- Previous tip 1 -->
+              <div class="bg-white p-5 rounded-xl shadow-sm">
+                <p class="text-gray-600"><span class="font-semibold">Zabezpiecz swój panel:</span> Zawsze używaj silnych, unikalnych haseł i włącz autoryzację dwuskładnikową (2FA), jeśli jest dostępna.</p>
+              </div>
+              <!-- Previous tip 2 -->
+              <div class="bg-white p-5 rounded-xl shadow-sm">
+                <p class="text-gray-600"><span class="font-semibold">Regularne backupy:</span> Ustaw automatyczne, regularne tworzenie kopii zapasowych bazy danych i plików. To Twoja siatka bezpieczeństwa.</p>
+              </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // --- User data ---
+        let currentUser = JSON.parse(localStorage.getItem('adminUser'));
+        if (currentUser && currentUser.avatar) {
+            document.getElementById('user-avatar').src = currentUser.avatar;
+        }
+
+        // --- Logout ---
+        const logoutBtn = document.getElementById('logout-btn');
+        logoutBtn.addEventListener('click', () => {
+            sessionStorage.removeItem('isAdmin');
+            window.location.href = 'login.html';
+        });
+
+        // --- Accordion Logic ---
+        const tipHeader = document.getElementById('tip-header');
+        const tipContent = document.getElementById('tip-content');
+        const tipArrow = document.getElementById('tip-arrow');
+
+        tipHeader.addEventListener('click', () => {
+            if (tipContent.style.maxHeight) {
+                tipContent.style.maxHeight = null;
+                tipArrow.classList.remove('rotate-180');
+            } else {
+                tipContent.style.maxHeight = tipContent.scrollHeight + "px";
+                tipArrow.classList.add('rotate-180');
+            }
+        });
+        
+        // --- Tip generation (simple example) ---
+        const tips = [
+            {
+                title: "Optymalizacja zdjęć produktowych",
+                content: "Upewnij się, że Twoje zdjęcia produktów są zoptymalizowane pod kątem szybkości ładowania. Użyj narzędzi do kompresji obrazów, takich jak TinyPNG lub ImageOptim. Staraj się utrzymać rozmiar pliku poniżej 100KB, nie tracąc przy tym na jakości. To znacznie poprawi doświadczenie użytkownika i SEO Twojej strony."
+            },
+            {
+                title: "Wykorzystaj Cache Przeglądarki",
+                content: "Skonfiguruj nagłówki 'Cache-Control' na swoim serwerze, aby przeglądarki mogły przechowywać statyczne zasoby (CSS, JS, obrazy). To drastycznie zmniejsza czas ładowania dla powracających użytkowników."
+            },
+            {
+                title: "Analiza zachowań użytkowników",
+                content: "Używaj narzędzi analitycznych, takich jak Google Analytics lub Hotjar, aby zrozumieć, jak użytkownicy wchodzą w interakcję z Twoją stroną. Mapy cieplne i nagrania sesji mogą odkryć problemy z użytecznością, o których nie miałeś pojęcia."
+            }
+        ];
+        
+        const nextTipBtn = document.getElementById('next-tip-btn');
+        const tipTitleElement = tipContent.querySelector('h4');
+        const tipContentElement = tipContent.querySelector('p');
+        let currentTipIndex = 0;
+        
+        nextTipBtn.addEventListener('click', () => {
+            currentTipIndex = (currentTipIndex + 1) % tips.length;
+            tipTitleElement.textContent = tips[currentTipIndex].title;
+            tipContentElement.textContent = tips[currentTipIndex].content;
+            
+            // Recalculate max-height if accordion is open
+            if (tipContent.style.maxHeight) {
+                // close and open to animate height change
+                tipContent.style.maxHeight = null;
+                setTimeout(() => {
+                   tipContent.style.maxHeight = tipContent.scrollHeight + "px";
+                }, 10);
+            }
+        });
+      });
+    </script>
+</body>
+</html> 

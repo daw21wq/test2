@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Twoje Centrum Wellness - Sezonowość Chińska</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #ffffff;
+            overflow: hidden; /* Prevents scrollbars on the body */
+        }
+        
+        .main-container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .scroll-content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+            padding-bottom: 8rem; /* Space for bottom nav */
+        }
+        .scroll-content::-webkit-scrollbar { display: none; }
+        .scroll-content { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 0;
+            padding-bottom: env(safe-area-inset-bottom, 0.5rem);
+        }
+        .nav-item {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.7rem;
+        }
+        .nav-item.active {
+             color: #ffffff;
+             font-weight: 600;
+        }
+        .nav-item i { font-size: 1.4rem; margin-bottom: 2px; }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Main content that scrolls -->
+        <main class="scroll-content">
+            <!-- Header -->
+            <header class="flex justify-between items-center mb-8">
+                <div class="flex items-center gap-4">
+                    <img id="user-avatar" src="" alt="Avatar" class="w-14 h-14 rounded-full border-2 border-white/50 shadow-lg">
+                    <div>
+                        <p class="text-base text-white/80">Dzień dobry,</p>
+                        <h1 id="user-name" class="text-2xl font-bold -mt-1"></h1>
+                    </div>
+                </div>
+                <button id="logout-btn" class="w-11 h-11 flex items-center justify-center glass-card rounded-full text-white/80 hover:text-white">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </header>
+
+            <!-- Today's Focus Card -->
+            <section id="focus-card" class="glass-card rounded-2xl p-6 mb-8 text-white">
+                 <div class="flex justify-between items-start">
+                    <div>
+                        <p id="tcm-season-element" class="font-semibold opacity-80 text-sm"></p>
+                        <h2 id="tcm-season-name" class="font-bold text-3xl mb-2"></h2>
+                    </div>
+                    <div id="tcm-season-icon" class="text-5xl opacity-80"></div>
+                </div>
+                <p id="tcm-season-advice" class="text-sm leading-relaxed opacity-90"></p>
+            </section>
+
+            <!-- Main Menu Grid -->
+            <section class="grid grid-cols-2 gap-4">
+                <a href="your-energy.html" class="glass-card rounded-xl p-4 flex flex-col items-center justify-center text-center h-28">
+                    <i class="fas fa-bolt text-2xl text-yellow-300 mb-2"></i>
+                    <span class="font-semibold text-sm">Twoja Energia</span>
+                </a>
+                <a href="health-monitor.html" class="glass-card rounded-xl p-4 flex flex-col items-center justify-center text-center h-28">
+                    <i class="fas fa-heartbeat text-2xl text-red-300 mb-2"></i>
+                    <span class="font-semibold text-sm">Monitor Zdrowia</span>
+                </a>
+                <a href="seasonal-recipes.html" class="glass-card rounded-xl p-4 flex flex-col items-center justify-center text-center h-28">
+                    <i class="fas fa-utensils text-2xl text-green-300 mb-2"></i>
+                    <span class="font-semibold text-sm">Przepisy</span>
+                </a>
+                 <a href="herbs.html" class="glass-card rounded-xl p-4 flex flex-col items-center justify-center text-center h-28">
+                    <i class="fas fa-leaf text-2xl text-teal-300 mb-2"></i>
+                    <span class="font-semibold text-sm">Zioła</span>
+                </a>
+                <a href="exercises.html" class="glass-card rounded-xl p-4 flex flex-col items-center justify-center text-center h-28">
+                    <i class="fas fa-dumbbell text-2xl text-blue-300 mb-2"></i>
+                    <span class="font-semibold text-sm">Ćwiczenia</span>
+                </a>
+                <a href="personalization-quiz.html" class="glass-card rounded-xl p-4 flex flex-col items-center justify-center text-center h-28">
+                    <i class="fas fa-question-circle text-2xl text-purple-300 mb-2"></i>
+                    <span class="font-semibold text-sm">Test Żywiołu</span>
+                </a>
+            </section>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav flex justify-around">
+            <a href="#" class="nav-item active flex flex-col items-center p-2">
+                <i class="fas fa-home"></i>
+                <span>Główna</span>
+            </a>
+            <a href="#" id="ai-chat-btn" class="nav-item flex flex-col items-center p-2">
+                <i class="fas fa-comments"></i>
+                <span>Czat AI</span>
+            </a>
+            <a href="settings.html" class="nav-item flex flex-col items-center p-2">
+                <i class="fas fa-cog"></i>
+                <span>Ustawienia</span>
+            </a>
+        </nav>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) { window.location.href = 'index.html'; return; }
+
+            document.getElementById('user-avatar').src = currentUser.avatar || 'https://i.pravatar.cc/150?u=a042581f4e29026704d';
+            document.getElementById('user-name').textContent = currentUser.name || 'Użytkownik';
+            document.getElementById('logout-btn').addEventListener('click', () => {
+                localStorage.removeItem('currentUser');
+                window.location.href = 'index.html';
+            });
+            document.getElementById('ai-chat-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('Czat AI wkrótce będzie dostępny!');
+            });
+
+            const tcmSeasons = {
+                Spring: { name: "Wiosna", element: "Element Drzewa", icon: "🌱", advice: "To czas odnowy. Skup się na oczyszczaniu, ruchu i wprowadzaniu do diety zielonych warzyw." },
+                Summer: { name: "Lato", element: "Element Ognia", icon: "☀️", advice: "Ciesz się energią i radością. Nawadniaj się, jedz chłodzące owoce i dbaj o serce." },
+                LateSummer: { name: "Późne Lato", element: "Element Ziemi", icon: "🌾", advice: "To czas harmonii i obfitości. Jedz naturalnie słodkie warzywa, by wzmocnić śledzionę." },
+                Autumn: { name: "Jesień", element: "Element Metalu", icon: "🍂", advice: "Zwolnij i zadbaj o odporność. Włącz do diety gotowane potrawy, by chronić płuca." },
+                Winter: { name: "Zima", element: "Element Wody", icon: "❄️", advice: "Regeneruj siły i odpoczywaj. Jedz pożywne zupy i dbaj o ciepło, by wspierać nerki." }
+            };
+
+            function getTCMSeason(date = new Date()) {
+                const month = date.getMonth();
+                if (month >= 2 && month <= 4) return tcmSeasons.Spring;
+                if (month >= 5 && month <= 7) return tcmSeasons.Summer;
+                if (month === 8) return tcmSeasons.LateSummer;
+                if (month >= 9 && month <= 10) return tcmSeasons.Autumn;
+                return tcmSeasons.Winter;
+            }
+
+            const currentSeason = getTCMSeason();
+            document.getElementById('tcm-season-element').textContent = currentSeason.element;
+            document.getElementById('tcm-season-name').textContent = currentSeason.name;
+            document.getElementById('tcm-season-icon').textContent = currentSeason.icon;
+            document.getElementById('tcm-season-advice').textContent = currentSeason.advice;
+        });
+    </script>
+</body>
+</html>

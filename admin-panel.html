@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Administratora</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8fafc;
+        }
+        .main-container {
+            width: 100%;
+            margin: 0;
+        }
+         @media (min-width: 640px) {
+            .main-container {
+                max-width: 1024px;
+                margin: auto;
+            }
+        }
+        .dashboard-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="main-container mx-auto p-4 sm:p-6 md:p-8">
+        <header class="mb-8 p-6 bg-white rounded-none sm:rounded-2xl shadow-md">
+            <div class="flex flex-wrap justify-between items-center gap-4">
+                <div>
+                    <h1 class="text-3xl sm:text-4xl font-bold text-gray-900">Panel Administratora</h1>
+                    <p class="text-gray-600 mt-2">Zarządzaj swoją aplikacją z jednego miejsca.</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button id="user-panel-btn" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg inline-flex items-center transition">
+                        <i class="fas fa-user-circle mr-2"></i>
+                        <span>Panel Usera</span>
+                    </button>
+                    <button id="logout-btn" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg inline-flex items-center transition">
+                        <i class="fas fa-sign-out-alt mr-2"></i>
+                        <span>Wyloguj</span>
+                    </button>
+                </div>
+            </div>
+            <div class="relative mt-6">
+                <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                <input type="text" id="search-input" placeholder="Czego szukasz? (np. 'użytkownicy', 'płatności')..." class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-shadow">
+            </div>
+        </header>
+
+        <main class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="dashboard-grid">
+            
+            <a href="#" class="dashboard-card block bg-white p-6 rounded-2xl shadow-sm" data-keywords="użytkownicy konta edycja usuwanie role">
+                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4"><i class="fas fa-users text-2xl text-blue-500"></i></div>
+                <h3 class="text-lg font-bold text-gray-800">Zarządzanie Użytkownikami</h3>
+                <p class="text-sm text-gray-500 mt-1">Zarządzaj kontami, rolami i dostępem.</p>
+            </a>
+            
+            <a href="#" class="dashboard-card block bg-white p-6 rounded-2xl shadow-sm" data-keywords="uprawnienia role dostęp bezpieczeństwo">
+                <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mb-4"><i class="fas fa-user-shield text-2xl text-yellow-500"></i></div>
+                <h3 class="text-lg font-bold text-gray-800">Zarządzanie Uprawnieniami</h3>
+                <p class="text-sm text-gray-500 mt-1">Konfiguruj role i poziomy dostępu.</p>
+            </a>
+
+            <a href="ai-integrations.html" class="dashboard-card block bg-white p-6 rounded-2xl shadow-sm" data-keywords="integracje ai sztuczna inteligencja openai">
+                <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4"><i class="fas fa-robot text-2xl text-purple-500"></i></div>
+                <h3 class="text-lg font-bold text-gray-800">Integracje AI</h3>
+                <p class="text-sm text-gray-500 mt-1">Połącz z usługami sztucznej inteligencji.</p>
+            </a>
+
+            <a href="#" class="dashboard-card block bg-white p-6 rounded-2xl shadow-sm" data-keywords="integracja stripe płatności subskrypcje faktury">
+                <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4"><i class="fab fa-stripe-s text-2xl text-indigo-500"></i></div>
+                <h3 class="text-lg font-bold text-gray-800">Integracja Stripe</h3>
+                <p class="text-sm text-gray-500 mt-1">Zarządzaj płatnościami i subskrypcjami.</p>
+            </a>
+
+            <a href="#" class="dashboard-card block bg-white p-6 rounded-2xl shadow-sm" data-keywords="eksport danych csv json raporty statystyki">
+                <div class="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center mb-4"><i class="fas fa-file-export text-2xl text-teal-500"></i></div>
+                <h3 class="text-lg font-bold text-gray-800">Eksport Danych</h3>
+                <p class="text-sm text-gray-500 mt-1">Pobierz dane użytkowników i aktywności.</p>
+            </a>
+
+            <a href="#" class="dashboard-card block bg-white p-6 rounded-2xl shadow-sm" data-keywords="dodaj treść przepisy artykuły porady">
+                <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4"><i class="fas fa-plus text-2xl text-green-500"></i></div>
+                <h3 class="text-lg font-bold text-gray-800">Dodaj Nową Treść</h3>
+                <p class="text-sm text-gray-500 mt-1">Utwórz przepisy, artykuły lub porady.</p>
+            </a>
+
+            <a href="#" class="dashboard-card block bg-white p-6 rounded-2xl shadow-sm" data-keywords="wyślij powiadomienie marketing push notyfikacje kampanie">
+                <div class="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center mb-4"><i class="fas fa-paper-plane text-2xl text-pink-500"></i></div>
+                <h3 class="text-lg font-bold text-gray-800">Wyślij Powiadomienie</h3>
+                <p class="text-sm text-gray-500 mt-1">Wysyłaj wiadomości do wszystkich użytkowników.</p>
+            </a>
+
+            <a href="#" class="dashboard-card block bg-white p-6 rounded-2xl shadow-sm" data-keywords="logi systemu dziennik zdarzeń błędy monitorowanie">
+                <div class="w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center mb-4"><i class="fas fa-clipboard-list text-2xl text-gray-600"></i></div>
+                <h3 class="text-lg font-bold text-gray-800">Logi Systemu</h3>
+                <p class="text-sm text-gray-500 mt-1">Przeglądaj dziennik zdarzeń i błędów.</p>
+            </a>
+        </main>
+        
+        <div id="no-results" class="text-center py-16 text-gray-500 hidden">
+            <i class="fas fa-search fa-3x mb-4"></i>
+            <h2 class="text-xl font-semibold">Brak wyników</h2>
+            <p>Nie znaleziono ustawień pasujących do Twojego zapytania.</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('search-input');
+            const dashboardGrid = document.getElementById('dashboard-grid');
+            const cards = dashboardGrid.querySelectorAll('.dashboard-card');
+            const noResults = document.getElementById('no-results');
+            const logoutBtn = document.getElementById('logout-btn');
+            const userPanelBtn = document.getElementById('user-panel-btn');
+
+            // Check if admin is logged in, otherwise redirect
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser || !currentUser.isAdmin) {
+                // Redirect to login, but show an alert first for clarity
+                alert("Brak uprawnień. Zaloguj się jako administrator.");
+                window.location.href = 'index.html';
+                return;
+            }
+
+            logoutBtn.addEventListener('click', () => {
+                localStorage.removeItem('currentUser');
+                window.location.href = 'index.html';
+            });
+
+            userPanelBtn.addEventListener('click', () => {
+                window.location.href = 'user-panel.html';
+            });
+
+            function filterCards() {
+                const searchTerm = searchInput.value.toLowerCase().trim();
+                let visibleCount = 0;
+
+                cards.forEach(card => {
+                    const keywords = card.dataset.keywords.toLowerCase();
+                    if (keywords.includes(searchTerm)) {
+                        card.style.display = 'block';
+                        visibleCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+            }
+
+            searchInput.addEventListener('input', filterCards);
+        });
+    </script>
+</body>
+</html>
